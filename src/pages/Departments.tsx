@@ -4,6 +4,8 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
+import { StatCard } from "@/components/StatCard";
+import { getDepartmentStatusColor } from "@/lib/report-utils";
 
 // Mock department data
 const departments = [
@@ -103,123 +105,85 @@ export default function Departments() {
     dept.head.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
-  const getStatusColor = (status: string) => {
-    switch (status) {
-      case "Active": return "bg-green-100 text-green-800 border-green-200";
-      case "Inactive": return "bg-red-100 text-red-800 border-red-200";
-      default: return "bg-gray-100 text-gray-800 border-gray-200";
-    }
-  };
 
   return (
-    <div className="p-6 space-y-6">
+    <div className="p-6 space-y-6 fade-in">
       {/* Header */}
-      <div className="flex justify-between items-center">
+      <div className="flex justify-between items-center slide-up">
         <div>
           <h1 className="text-3xl font-bold text-foreground">Departments</h1>
           <p className="text-muted-foreground mt-1">Manage city departments and their operations</p>
         </div>
-        <Button className="bg-primary hover:bg-primary/90">
+        <Button className="hover:scale-105 transition-transform duration-200">
           <Plus className="w-4 h-4 mr-2" />
           Add New Department
         </Button>
       </div>
 
       {/* Stats Cards */}
-      <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
-        <Card className="border-border bg-card">
-          <CardContent className="p-4">
-            <div className="flex items-center justify-between">
-              <div>
-                <p className="text-sm font-medium text-muted-foreground">Total Departments</p>
-                <p className="text-2xl font-bold text-foreground">{departments.length}</p>
-              </div>
-              <div className="w-8 h-8 bg-primary/10 rounded-lg flex items-center justify-center">
-                <Users className="w-4 h-4 text-primary" />
-              </div>
-            </div>
-          </CardContent>
-        </Card>
-
-        <Card className="border-border bg-card">
-          <CardContent className="p-4">
-            <div className="flex items-center justify-between">
-              <div>
-                <p className="text-sm font-medium text-muted-foreground">Total Staff</p>
-                <p className="text-2xl font-bold text-foreground">
-                  {departments.reduce((sum, dept) => sum + dept.staff, 0)}
-                </p>
-              </div>
-              <div className="w-8 h-8 bg-blue-100 rounded-lg flex items-center justify-center">
-                <Users className="w-4 h-4 text-blue-600" />
-              </div>
-            </div>
-          </CardContent>
-        </Card>
-
-        <Card className="border-border bg-card">
-          <CardContent className="p-4">
-            <div className="flex items-center justify-between">
-              <div>
-                <p className="text-sm font-medium text-muted-foreground">Active Reports</p>
-                <p className="text-2xl font-bold text-foreground">
-                  {departments.reduce((sum, dept) => sum + dept.activeReports, 0)}
-                </p>
-              </div>
-              <div className="w-8 h-8 bg-yellow-100 rounded-lg flex items-center justify-center">
-                <FileText className="w-4 h-4 text-yellow-600" />
-              </div>
-            </div>
-          </CardContent>
-        </Card>
-
-        <Card className="border-border bg-card">
-          <CardContent className="p-4">
-            <div className="flex items-center justify-between">
-              <div>
-                <p className="text-sm font-medium text-muted-foreground">Completed Reports</p>
-                <p className="text-2xl font-bold text-foreground">
-                  {departments.reduce((sum, dept) => sum + dept.completedReports, 0)}
-                </p>
-              </div>
-              <div className="w-8 h-8 bg-green-100 rounded-lg flex items-center justify-center">
-                <FileText className="w-4 h-4 text-green-600" />
-              </div>
-            </div>
-          </CardContent>
-        </Card>
-      </div>
-
-      {/* Search */}
-      <div className="relative">
-        <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground w-4 h-4" />
-        <Input
-          placeholder="Search departments, heads, or descriptions..."
-          value={searchTerm}
-          onChange={(e) => setSearchTerm(e.target.value)}
-          className="pl-10"
+      <div className="grid grid-cols-1 md:grid-cols-4 gap-4 stagger-fade-in">
+        <StatCard
+          title="Total Departments"
+          value={departments.length}
+          icon={Users}
+          iconColor="text-primary"
+          iconBg="bg-primary/10"
+        />
+        <StatCard
+          title="Total Staff"
+          value={departments.reduce((sum, dept) => sum + dept.staff, 0)}
+          icon={Users}
+          iconColor="text-accent-foreground"
+          iconBg="bg-accent/10"
+        />
+        <StatCard
+          title="Active Reports"
+          value={departments.reduce((sum, dept) => sum + dept.activeReports, 0)}
+          icon={FileText}
+          iconColor="text-warning-foreground"
+          iconBg="bg-warning/10"
+        />
+        <StatCard
+          title="Completed Reports"
+          value={departments.reduce((sum, dept) => sum + dept.completedReports, 0)}
+          icon={FileText}
+          iconColor="text-success-foreground"
+          iconBg="bg-success/10"
         />
       </div>
 
+      {/* Search */}
+      <Card className="p-4 glass-card hover-lift">
+        <div className="relative">
+          <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground w-4 h-4" />
+          <Input
+            placeholder="Search departments, heads, or descriptions..."
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+            className="pl-10 transition-all duration-200 focus:ring-2 focus:ring-primary/20"
+          />
+        </div>
+      </Card>
+
       {/* Departments Grid */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 stagger-fade-in">
         {filteredDepartments.map((department) => (
-          <Card key={department.id} className="border-border bg-card hover:shadow-md transition-shadow cursor-pointer">
+          <Card key={department.id} className="border-border bg-card hover:shadow-lg transition-all duration-300 hover:scale-[1.02] cursor-pointer group hover-glow">
             <CardHeader className="pb-3">
               <div className="flex items-start justify-between">
                 <div className="flex-1">
-                  <CardTitle className="text-lg font-semibold text-foreground mb-1">
+                  <CardTitle className="text-lg font-semibold text-foreground mb-1 group-hover:text-primary transition-colors duration-200">
                     {department.name}
                   </CardTitle>
-                  <Badge className={`text-xs ${getStatusColor(department.status)}`}>
+                  <Badge className={`text-xs ${getDepartmentStatusColor(department.status)}`}>
                     {department.status}
                   </Badge>
                 </div>
-                <div className="flex gap-1">
-                  <Button variant="ghost" size="sm">
+                <div className="flex gap-1 opacity-0 group-hover:opacity-100 transition-opacity duration-200">
+                  <Button variant="ghost" size="sm" className="hover:scale-110 transition-transform duration-200">
                     <Edit className="w-4 h-4" />
                   </Button>
-                  <Button variant="ghost" size="sm" className="text-destructive hover:text-destructive">
+                  <Button variant="ghost" size="sm" className="text-destructive hover:text-destructive hover:scale-110 transition-all duration-200">
                     <Trash2 className="w-4 h-4" />
                   </Button>
                 </div>
