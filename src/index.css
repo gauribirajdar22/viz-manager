@@ -147,7 +147,15 @@
   }
   
   .admin-sidebar-item {
-    @apply flex items-center gap-3 px-4 py-3 rounded-lg transition-colors;
+    @apply flex items-center gap-3 px-4 py-3 rounded-lg transition-all duration-300 relative overflow-hidden text-[hsl(var(--admin-sidebar-foreground))]/80 hover:text-[hsl(var(--admin-sidebar-foreground))];
+  }
+  
+  .admin-sidebar-item::before {
+    @apply content-[''] absolute left-0 top-0 w-1 h-full bg-primary transform -translate-x-full transition-transform duration-300;
+  }
+  
+  .admin-sidebar-item:hover::before {
+    @apply translate-x-0;
   }
   
   .admin-sidebar-item:hover {
@@ -155,7 +163,11 @@
   }
   
   .admin-sidebar-item.active {
-    @apply bg-[hsl(var(--admin-sidebar-active))] text-white;
+    @apply bg-[hsl(var(--admin-sidebar-active))] text-white border-l-4 border-primary shadow-lg;
+  }
+  
+  .admin-sidebar-item.active::before {
+    @apply translate-x-0 w-full bg-primary/10;
   }
 
   /* Status Badges */

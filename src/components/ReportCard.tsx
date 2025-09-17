@@ -25,24 +25,24 @@ interface ReportCardProps {
 
 export function ReportCard({ report, showDescription = false, compact = false }: ReportCardProps) {
   return (
-    <Card className="p-4 glass-card hover:shadow-md transition-all duration-300 hover:scale-[1.01] group">
+    <Card className="group p-4 glass-card hover:shadow-xl transition-all duration-500 cursor-pointer border hover:border-primary/20 transform hover:-translate-y-2 hover:scale-[1.02]">
       <div className="flex items-start justify-between gap-4">
         <div className="flex-1 space-y-3">
           {/* Header */}
           <div className="flex items-center gap-3 flex-wrap">
-            <span className="font-mono text-lg font-semibold text-primary">
+            <span className="font-mono text-lg font-semibold text-primary transition-all duration-300 group-hover:text-primary/80 group-hover:scale-110">
               #{report.id}
             </span>
-            <Badge variant={getSeverityVariant(report.severity)} className="animate-in fade-in-50 duration-300">
+            <Badge variant={getSeverityVariant(report.severity)} className="animate-in fade-in-50 duration-300 transition-all group-hover:scale-110">
               {report.severity} Severity
             </Badge>
-            <Badge variant={getStatusVariant(report.status)} className="animate-in fade-in-50 duration-300 delay-75">
+            <Badge variant={getStatusVariant(report.status)} className="animate-in fade-in-50 duration-300 delay-75 transition-all group-hover:scale-110">
               {report.status}
             </Badge>
           </div>
 
           {/* Title */}
-          <h2 className={`font-semibold text-foreground group-hover:text-primary transition-colors duration-200 ${
+          <h2 className={`font-semibold text-foreground group-hover:text-primary transition-all duration-300 group-hover:translate-x-1 ${
             compact ? "text-base" : "text-xl"
           }`}>
             {report.title}
@@ -50,21 +50,21 @@ export function ReportCard({ report, showDescription = false, compact = false }:
 
           {/* Description */}
           {showDescription && report.description && (
-            <p className="text-muted-foreground line-clamp-2 text-sm leading-relaxed">
+            <p className="text-muted-foreground line-clamp-2 text-sm leading-relaxed transition-colors group-hover:text-foreground/80">
               {report.description}
             </p>
           )}
 
           {/* Details Grid */}
-          <div className={`grid gap-3 text-sm ${compact ? "grid-cols-1" : "grid-cols-1 md:grid-cols-2 lg:grid-cols-3"}`}>
+          <div className={`grid gap-3 text-sm transition-all duration-300 group-hover:translate-x-1 ${compact ? "grid-cols-1" : "grid-cols-1 md:grid-cols-2 lg:grid-cols-3"}`}>
             <div className="flex items-center gap-2">
-              <MapPin className="w-4 h-4 text-muted-foreground flex-shrink-0" />
+              <MapPin className="w-4 h-4 text-muted-foreground flex-shrink-0 transition-colors group-hover:text-primary" />
               <span className="text-muted-foreground">Location:</span>
               <span className="font-medium truncate">{report.location}</span>
             </div>
             
             <div className="flex items-center gap-2">
-              <Calendar className="w-4 h-4 text-muted-foreground flex-shrink-0" />
+              <Calendar className="w-4 h-4 text-muted-foreground flex-shrink-0 transition-colors group-hover:text-primary" />
               <span className="text-muted-foreground">
                 {report.time ? "Time:" : "Submitted:"}
               </span>
@@ -83,7 +83,7 @@ export function ReportCard({ report, showDescription = false, compact = false }:
 
           {/* Assignment & Images */}
           {(report.assignedTo || report.images) && (
-            <div className="pt-2 border-t border-border">
+            <div className="pt-2 border-t border-border transition-all duration-300 group-hover:border-primary/20">
               <div className="flex items-center justify-between text-sm">
                 {report.assignedTo && (
                   <div>
@@ -93,7 +93,7 @@ export function ReportCard({ report, showDescription = false, compact = false }:
                 )}
                 {report.images && (
                   <div className="flex items-center gap-1 text-muted-foreground">
-                    <Image className="w-4 h-4" />
+                    <Image className="w-4 h-4 transition-colors group-hover:text-primary" />
                     <span>{report.images} photo{report.images !== 1 ? "s" : ""}</span>
                   </div>
                 )}
@@ -107,9 +107,9 @@ export function ReportCard({ report, showDescription = false, compact = false }:
           <Link to={`/reports/${report.id}`}>
             <Button 
               size={compact ? "sm" : "default"} 
-              className="flex items-center gap-2 hover:scale-105 transition-transform duration-200"
+              className="flex items-center gap-2 hover:scale-110 transition-all duration-300 hover:shadow-lg"
             >
-              <Eye className="w-4 h-4" />
+              <Eye className="w-4 h-4 transition-transform duration-300 group-hover:scale-110" />
               {compact ? "View" : "View Details"}
             </Button>
           </Link>

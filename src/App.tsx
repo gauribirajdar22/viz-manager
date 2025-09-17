@@ -19,18 +19,25 @@ const App = () => (
       <Toaster />
       <Sonner />
       <BrowserRouter>
-        <div className="flex min-h-screen bg-background">
-          <AdminSidebar />
-          <main className="flex-1 overflow-auto">
-            <Routes>
-              <Route path="/" element={<Dashboard />} />
-              <Route path="/reports" element={<Reports />} />
-              <Route path="/reports/:id" element={<ReportDetail />} />
-              <Route path="/departments" element={<Departments />} />
-              <Route path="/users" element={<Users />} />
-              {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
-              <Route path="*" element={<NotFound />} />
-            </Routes>
+        <div className="flex h-screen w-full bg-background overflow-hidden">
+          {/* Fixed Sidebar */}
+          <div className="flex-shrink-0">
+            <AdminSidebar />
+          </div>
+          
+          {/* Scrollable Main Content */}
+          <main className="flex-1 overflow-y-auto overflow-x-hidden">
+            <div className="min-h-full">
+              <Routes>
+                <Route path="/" element={<Dashboard />} />
+                <Route path="/reports" element={<Reports />} />
+                <Route path="/reports/:id" element={<ReportDetail />} />
+                <Route path="/departments" element={<Departments />} />
+                <Route path="/users" element={<Users />} />
+                {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
+                <Route path="*" element={<NotFound />} />
+              </Routes>
+            </div>
           </main>
         </div>
       </BrowserRouter>

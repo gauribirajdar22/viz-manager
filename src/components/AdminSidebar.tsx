@@ -28,14 +28,14 @@ export function AdminSidebar() {
   };
 
   return (
-    <div className="w-64 h-screen bg-[hsl(var(--admin-sidebar))] text-[hsl(var(--admin-sidebar-foreground))] flex flex-col">
+    <div className="w-64 h-full bg-[hsl(var(--admin-sidebar))] text-[hsl(var(--admin-sidebar-foreground))] flex flex-col border-r border-border/20">
       {/* Logo Section */}
       <div className="p-6 border-b border-white/10">
-        <div className="flex items-center gap-3">
-          <div className="w-10 h-10 bg-primary rounded-lg flex items-center justify-center">
-            <Globe className="w-6 h-6 text-white" />
+        <div className="flex items-center gap-3 group cursor-pointer">
+          <div className="w-10 h-10 bg-primary rounded-lg flex items-center justify-center transition-transform duration-200 group-hover:scale-110 group-hover:rotate-3">
+            <Globe className="w-6 h-6 text-white transition-transform duration-200" />
           </div>
-          <div>
+          <div className="transition-all duration-200 group-hover:translate-x-1">
             <h1 className="text-xl font-bold">CityConnect</h1>
             <p className="text-sm text-white/70">Admin Panel</p>
           </div>
